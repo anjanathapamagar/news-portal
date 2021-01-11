@@ -30,6 +30,7 @@ export default function Home() {
     return (
       <div className='mainhome'>
         <Newsticker></Newsticker>
+        <div className="wrap-nav">
       <Layout >
       </Layout>
       
@@ -84,13 +85,13 @@ export default function Home() {
 
 <Section/>
 <Newsfilter></Newsfilter>
-{/* <Trend></Trend> */}
+<Trend></Trend>
 {/* <Body></Body> */}
 <Editors></Editors>
 {/* <Comment></Comment> */}
 <Footer/>
       
-      </div>
+      </div></div>
        
     )
 }

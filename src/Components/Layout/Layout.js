@@ -1,35 +1,38 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, Component} from 'react'
 import '../../style.css';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { NavItem } from 'react-bootstrap';
 
 
 
-const Layout =({children})=> {
-    const nav = ()=>(
+export default class Layout extends Component {
+  render() {
+    return (
 
-        <nav className="navbar navbar-expand navbar-dark scrolling-navbar " id="navbar1">
+        <nav className="navbar navbar-expand navbar-dark scrolling-navbar yamm " id="navbar1">
   
-  <div className="container-fluid" id="topnav1">
-  <div className="" id="navbarNav">
-    <ul className="navbar-nav ">
-      <li className="nav-item">
-        <a className="nav-link " href="#">ALL PAGES <span className="sr-only"></span></a>
+  <div className="navbar-collapse collapse" id="navbar-collapse-1">
+  <div className="container" id="navbarNav">
+    <div className="row" id="navrow">
+      <div className="col-xs-12" id="navlist">
+    <ul className=" navbar-nav ">
+      <li className="navitem">
+        <a className="nav-link " href="#">All pages <span className="sr-only"></span></a>
       </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">HEALTH</a>
+      <li className="navitem">
+        <a className="nav-link" href="#">Health</a>
       </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">TECHNOLOGY</a>
+      <li className="navitem">
+        <a className="nav-link" href="#">technology</a>
       </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">POLITICS</a>
+      <li className="navitem">
+        <a className="nav-link" href="#">politics</a>
       </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">ENTERTAINMENT</a>
+      <li className="navitem">
+        <a className="nav-link" href="#">entertainment</a>
       </li>
-      <li className="nav-item">
-        <Link to="/login" className="nav-link" >LOGIN</Link>
+      <li className="navitem">
+        <Link to="/login" className="nav-link" >login</Link>
       </li>
       {/* <li className="nav-item">
         <a className="nav-link" href="#">POLITICS</a>
@@ -39,18 +42,12 @@ const Layout =({children})=> {
       </li> */}
     </ul>
     </div>
+    </div>
+    </div>
   </div>
+  
 </nav>
         
-    )
-    return(
-        <Fragment>
-            {nav()}
-            <div classNameName = "container">
-                {children}
-            </div>
-        </Fragment>
-    )
-}
-
-export default withRouter (Layout);
+        )
+      }
+    }

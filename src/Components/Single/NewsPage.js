@@ -16,12 +16,14 @@ export default class NewsPage extends Component {
         return (
             <div >
                 <Newsticker></Newsticker>
+                <div className="wrap-nav">
                 <Layout></Layout>
                 
                 <div className='section-title section-bg'>
                 <img className="img-fluid"  src={front1} alt="" />
                 
                 </div>
+                
                 <div className="breadcrumb-wrap">
                 <Breadcrumb>
                 <Breadcrumb.Item href="#" className="text-uppercase breaditem" id="breaditem">Home</Breadcrumb.Item>
@@ -103,6 +105,7 @@ export default class NewsPage extends Component {
                 <Comment/>
                 <Footer></Footer>
 
+            </div>
             </div>
         )
     }

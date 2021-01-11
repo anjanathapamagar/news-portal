@@ -33,7 +33,8 @@ export default function Trend() {
   <div className="row" id="row1" >
   
     <div className="col-lg-7 ">
-      <div id="box1">
+      <div id="box1" className="border">
+        
       </div>
     </div>
     <div className="col-lg-5">
