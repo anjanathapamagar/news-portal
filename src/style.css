@@ -144,11 +144,11 @@
     background-color: black;
 }
 
-.yamm .container {
+.yamm #navbarNav {
     position: relative;
 }
 @media (min-width: 768px)
-{.container {
+{#navbarNav {
     width: 750px;
 }}
 
