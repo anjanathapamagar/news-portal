@@ -13,53 +13,51 @@ function Navbar() {
 
   return (
     <>
-    
-      <IconContext.Provider value={{  }}>
-        <p className='navbar'>
-        <p className='menu-bars'>
-        {" "} {" "} <FaIcons.FaFacebook/> {" "}
-          <FaIcons.FaTwitter/>{" "}
-          <FaIcons.FaYoutube/>{" "}
-          <FaIcons.FaInstagram/>{" "}
-          <FaIcons.FaLinkedin/>{ " "}
-          <FaIcons.FaPinterest/>
 
-          {/* <FaIcons.FaSearch/> */}
-            
+      <IconContext.Provider value={{}}>
+        <p className='navbar'>
+          <p className='menu-bars'>
+            {" "} {" "} <FaIcons.FaFacebook /> {" "}
+            <FaIcons.FaTwitter />{" "}
+            <FaIcons.FaYoutube />{" "}
+            <FaIcons.FaInstagram />{" "}
+            <FaIcons.FaLinkedin />{" "}
+            <FaIcons.FaPinterest />
+
+            {/* <FaIcons.FaSearch/> */}
+
           </p>
-            {/* <div className="search">
+          {/* <div className="search">
         <FaIcons.FaSearch></FaIcons.FaSearch> 
         
         </div> */}
-        <p className="logo">
-            
-            <FaIcons.FaNewspaper/>News <b>Agency</b></p>
-            <p className="signin"><Link to ={"/regi"}  className="signin">Register</Link>  </p> <p> or</p><p> <Link to ={"/login"}  className="signin">Login</Link> </p>
-            <div className=" h-100">
-      <div className="d-flex justify-content-center h-100">
-        <div className="searchbar">
+          <p className="logo">
 
-          <input className="search_input" type="text" name="" placeholder="Search..."/>
-          
-          <a href="#" className="search_icon"><FaIcons.FaSearch /></a>
-        </div>
-      </div>
-    </div>
-    
+            <FaIcons.FaNewspaper />News <b>Agency</b></p>
+          <p className="signin"><Link to={"/regi"} className="signin">Register</Link>  </p> <p> or</p><p> <Link to={"/login"} className="signin">Login</Link> </p>
+          <div className=" h-100">
+            <div className="d-flex justify-content-center h-100">
+              <div className="searchbar">
+
+                <input className="search_input" type="text" name="" placeholder="Search..." />
+
+                <a href="#" className="search_icon"><FaIcons.FaSearch /></a>
+              </div>
+            </div>
+          </div>
+
           <p className='menu-bars'>
-          
             <FaIcons.FaList onClick={showSidebar} />
           </p>
-          
         </p>
-        
+
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        
+
           <ul className='nav-menu-items' onClick={showSidebar}>
-              <p>.</p><p>.</p>
-          <li className='navbar-toggle'>
-    <p></p>          <Link to='#' className='menu-bars2'>
-              <AiIcons.AiOutlineClose />
+            <p>.</p><p>.</p>
+            <li className='navbar-toggle'>
+              <p></p>          <Link to='#' className='menu-bars2'>
+                <AiIcons.AiOutlineClose />
               </Link>
             </li>
             {SidebarData.map((item, index) => {
@@ -72,7 +70,7 @@ function Navbar() {
                 </li>
               );
             })}
-           
+
           </ul>
         </nav>
       </IconContext.Provider>

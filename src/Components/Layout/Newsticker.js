@@ -26,13 +26,12 @@ export default class Newsticker extends Component {
          <br></br><br></br><br></br><br></br><br></br><br></br><br>
          </br><br></br><br></br>``
         <br></br>
-        
+        <Comment/>
         <Body/>
-<Comment/>
+
         <Footer/>
-
-
-  
+        
+ 
             </div>
         )
     }
