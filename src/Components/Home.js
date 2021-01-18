@@ -86,7 +86,9 @@ export default function Home() {
 <Section/>
 <Newsfilter></Newsfilter>
 {/* <Trend></Trend> */}
-{/* <Body></Body> */}
+<br/><br/><br/><br/><br/>
+<Body></Body>
+<br/><br/><br/><br/><br/><br/><br/><br/>
 <Editors></Editors>
 {/* <Comment></Comment> */}
 <Footer/>

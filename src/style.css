@@ -2,6 +2,27 @@
 .navbar{background-color:rgba(0,0,0,.2)}
 .top-nav-collapse{background-color:#1C2331}
 
+
+/* user icon */
+.usericon :hover{
+    background-color: yellowgreen;
+}
+/* .closeicon{
+    float: right;
+} */
+#navitemlist{
+    list-style: none;
+}
+#navitemlist :hover{
+    background-color: #02b300;
+}
+.closeb{
+    padding-right: 2%;
+    height: 1%;
+}
+.closeb :hover{
+    background-color:#e20e0e
+}
 #title{
     margin: auto;
   width: 50%;
@@ -82,7 +103,7 @@
     background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.86) 100%);
     z-index: 777;
     text-align: center;
-    position: sticky;
+    position: sticky!important;
     
 }
 @media (min-width: 768px)
@@ -552,7 +573,9 @@ ul, ol {
 }
 
 
-
+.modal-header{
+    height: 1%!important;
+}
 
 
 /* LOGIN */

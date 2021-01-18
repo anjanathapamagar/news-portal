@@ -1,12 +1,24 @@
 import React, {Fragment, Component} from 'react'
 import '../../style.css';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import { NavItem } from 'react-bootstrap';
+import {Form, FormGroup, Label, Input, Button ,Modal} from 'react-bootstrap'
+import { FaUserCircle } from 'react-icons/fa';
+import Login from '../Login.js';
+import LoginModal from '../LoginModal';
 
 
 
-export default class Layout extends Component {
+ class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+      addModalShow: false
+    }
+
+      }
+      
   render() {
+    let addModalClose =()=> this.setState({addModalShow:false});
     return (
 
         <nav className="navbar navbar-expand navbar-dark scrolling-navbar yamm " id="navbar1">
@@ -29,11 +41,12 @@ export default class Layout extends Component {
         <a className="nav-link" href="#">politics</a>
       </li>
       <li className="navitem">
-        <a className="nav-link" href="#">entertainment</a>
-      </li>
+        <a className="nav-link" href="#" >entertainment</a>
+     </li>
       <li className="navitem">
         <Link to="/login" className="nav-link" >login</Link>
       </li>
+      
       {/* <li className="nav-item">
         <a className="nav-link" href="#">POLITICS</a>
       </li>
@@ -45,9 +58,17 @@ export default class Layout extends Component {
     </div>
     </div>
   </div>
-  
+  <li className="navitem" id="navitemlist">
+        {/* <a href="#" id="closeicon" >< FaUserCircle onClick={() => this.setState({addModalShow:true})} size='1.5rem' className="usericon" color="white"></FaUserCircle></a> */}
+       <Login
+         show ={ this.state.addModalShow}
+         onHide = {addModalClose}/> 
+      </li>
+         
 </nav>
         
         )
       }
     }
+
+    export default (Layout);
