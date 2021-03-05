@@ -1,75 +1,93 @@
+import { Link } from 'react-router-dom';
+import ImageSlider from "../Components/ForImage.js"
+import React, { Component } from 'react'
+import Axios from "axios";
 
-import f11 from "../images/b11.jpeg";
-import f2 from "../images/collection.png";
-import f1 from "../images/10.jpg";
-import f4 from "../images/14.jpg";
-import f5 from "../images/12.jpg";
-import f6 from "../images/11.jpg";
+export default class Editors extends Component {
+    constructor(props) {
+        super(props);
 
-import { Button,  FormGroup, Label, Input} from 'reactstrap';
+        this.state = {
+            categories: {},
+            previousMonthData: {},
+            isRequestComplete: false,
+            errors: {},
+            News:[],
+            dialog: null,
+        
+        };
 
-function Editors (props) {
-    return (
-        <>
-       
-       <div className="container" id="skcontainer">
-<div className="row">
-    <div className="col">
-<div className="my-5 feature">
+    }
 
-    
-<div className="centered1">
-   <div className="">
-   <h4 className="text-block">EDITOR'S PICK</h4>
+
+    getNews = () =>{
+        Axios.get(`https://news-portal-api-server.herokuapp.com/news/popular/previous_month/false/100`)
+        .then((res) => {
+          console.log(res.data); 
+          this.setState({ News: res.data });
   
-    </div>
-   
-    </div>
-    
-    <div className="feature__wrapper">
-        <div className="row">
-                <div className="feature__item d-flex mt-5">
-                
-                    <div className="">
-                        <img src={f1} alt="" />
-                        <h6 className="bottom-left"><b>Lorem ipsum dolor amet consectetur adipisicing elit sed 
-                        {/* <br />consectetur adipisicing elit sed */}
-                         </b></h6>
-                        <h6 className="bottom-left"><b>ByJOHNSANDER</b></h6>
-                       
-                    </div>
-                    <hr/>
-                    <div className=""> 
-                     <img src={f4} alt="" />
-                     <h6 className="bottom-left"><b>Lorem ipsum dolor amet consectetur adipisicing elit sed </b></h6>
-                     <h6 className="bottom-left"><b>ByADAMCOWIE</b></h6>
-                     
-                    </div>
-                    <div className="">
-                        <img src={f5} alt="" />
-                        <h6  className="bottom-left"><b>Lorem ipsum dolor amet consectetur adipisicing elit sed</b></h6>
-                        <h7  className="bottom-left"><b>ByTHOMOS RICKY</b></h7>
-                        <div className=""> 
-                         {/* <input className="text3" type = "WORLD" name = "WORLD"  value = "WORLD" />  */}
-                      
-                        </div>
-                    </div>
-                    <div className="">
-                        <img src={f6} alt="" />
-                        <h6 className="bottom-left"><b>Lorem ipsum dolor amet consectetur adipisicing elit sed</b> </h6>
-                        <h8 className="bottom-left"><b>BySALARKEN</b></h8>
-                        <div className="topy">  
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-{/* </div> */}
-</>
-    );
+        }).catch((err) => console.log(err.response));
+    }
+    componentDidMount=()=>{
+        this.getNews();
+    }
+    render() {
+        const {News} = this.state
+        console.log(News);
+        return (
+            <>
+            <div className="container" id="skcontainer">
+     <div className="row">
+         <div className="col">
+     <div className="my-5 feature">
+     
+         
+     <div className="centered">
+        <div className="text-block0">
+        <h6 className="lastmonth">LAST MONTH</h6>
+       
+         </div>
+        
+         </div>
+         
+         <div className="feature__wrapper">
+             <div className="row">
+                     <div className="feature__item d-flex mt-5">
+              
+                         <hr/>
+
+                         {
+
+this.state.News.slice(0,4).map((News) => {
+    console.log(News)
+  return <p  > 
+                         <div className="forop"> 
+                          {/* <img src={f4} alt="" /> */}
+                          {
+                    News.images && News.images.length > 0 &&
+                    (
+                      <ImageSlider  images={News.images} />
+                    )
+                  } </div>
+                  
+                          <h6 className="bottom-left lastmtitle font-weight-bold"  key={News.id}><Link to={{
+                                            pathname: `/newspage/${News._id}`,
+                                            News
+                                        }} className="ttitle" style={{ textDecoration: 'none' }}>{News.title.substring(0,30) + '...'} </Link></h6>
+                          <h6 className="bottom-left fo font-weight-bold "><b className="authname">By: {News.author.fullName}</b></h6>
+                          
+                         
+                         </p>
+})
+    }
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     </div>
+     </div>
+     </>
+        )
+    }
 }
-export default Editors;

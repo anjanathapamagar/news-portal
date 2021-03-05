@@ -1,7 +1,15 @@
-// const BaseURL = "https://news-portal-api-server.herokuapp.com/";
-const BaseURL = "http://192.168.0.100:5000/";
+const BaseURL = "https://news-portal-api-server.herokuapp.com/";
+// const BaseURL = "http://192.168.0.100:5000/";
 
 const PopularityThreshold = 1000;
+export function changeCategory(categoryName) {
+    return {
+        type: 'CATEGORY_CHANGED',
+        categoryName
+    }
+}
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
 const CSSColorNames = [
     "AliceBlue",
     "AntiqueWhite",

@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './Layout/SidebarData.js';
 import '../style.css';
 import { IconContext } from 'react-icons';
+import Login from './Auth/Login.js';
+import Registration from './Auth/Registration.js'
 
-function Navbar() {
-  const [sidebar, setSidebar] = useState(false);
 
-  const showSidebar = () => setSidebar(!sidebar);
 
-  return (
-    <>
+
+export default class Navbar extends Component {
+  constructor(props){
+    super(props);
+   
+    this.state ={
+        sidebar: false,
+        setSidebar:false,
+        addModalShow:false,
+        addModalShow2:false
+    }
+    
+}
+ 
+  render() {
+    let {sidebar, setSidebar, showSidebar}=this.state
+    let addModalClose =()=> this.setState({addModalShow:false});
+    let addModalClose2 =()=> this.setState({addModalShow2:false});
+    showSidebar = () => setSidebar(!sidebar);
+    return (
+      <>
 
       <IconContext.Provider value={{}}>
         <p className='navbar' id="snav">
@@ -34,7 +52,17 @@ function Navbar() {
           <p className="logo">
 
             <FaIcons.FaNewspaper />News <b>Agency</b></p>
-          <p className="signin"><Link to={"/regi"} className="signin">Register</Link>  </p> <p> or</p><p> <Link to={"/login"} className="signin">Login</Link> </p>
+          <p className="signin"><a href="#" onClick={() => this.setState({addModalShow2:true})} className="signin">Register</a> 
+          <Registration
+          show={this.state.addModalShow2} 
+          onHide={addModalClose2}
+          />
+           </p> <p> or</p><p> <a href="#" onClick={() => this.setState({addModalShow:true})} className="signin">Login</a>
+          <Login
+          show={this.state.addModalShow} 
+          onHide={addModalClose}
+          />
+           </p>
           <div className=" h-100">
             <div className="d-flex justify-content-center h-100">
               <div className="searchbar">
@@ -75,7 +103,7 @@ function Navbar() {
         </nav>
       </IconContext.Provider>
     </>
-  );
+    )
+  }
 }
 
-export default Navbar;

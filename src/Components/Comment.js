@@ -1,16 +1,57 @@
-
 import React, { Component } from 'react'
-import { FaFacebook, FaHandPointUp, FaIcons, FaInstagram, FaLinkedin, FaPinterest, FaThumbsDown, FaThumbsUp, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
 import '../style.css'
+import DateFormat from 'dateformat';
+import User from "../images/user.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import Axios from 'axios'
 
 export default class Comment extends Component {
+
+
+//   handleSubmit = (e) => {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//         this.setState();
+//         Axios({
+//             method: 'post',
+//              url: https://news-portal-api-server.herokuapp.com/news/${this.props.match.params.newsID}/comments/,
+//             headers: {
+//                 authorization: token
+//             }
+//         }).then((res) => {
+//             console.log(res.data);
+//             //   this.setState({comments: res.data});
+//             alert('comment added succesfully')
+//         }).catch((err) => console.log(err.response));
+
+//     }
+// };
+
+  getCommentReactCount = (comment) => {
+    const reacts = {
+        like: 0,
+        dislike: 0
+    };
+
+    if (comment.reacts.length > 0) {
+        comment.reacts.forEach(react => {
+            if (react.type === "LIKE") {
+                reacts.like = reacts.like + 1;
+            } else if (react.type === "DISLIKE") {
+                reacts.dislike = reacts.dislike + 1;
+            }
+        });
+    }
+    return reacts;
+};
+
+
   render() {
+
     return (
       <div>
-        <b><div className="new6"></div></b>
-        <p className="tags"><b>TAGS:</b>  Movies, Fashion, Health</p>
-        <br></br>
-
         {/* <div className="card emojitab">
 
           <div className="card-body">
@@ -23,133 +64,37 @@ export default class Comment extends Component {
           </div>
 
         </div> */}
-        <br></br>
-        <div class="card bg-light mb-3 author" >
-          <div class="card-body">
-            <img className="card-img imgcard" src="sersoti.jpg" alt="Card image cap" />
-            <b className=" card-text text-muted name">AUTHOR</b>
-            <b> <div>SARASWOTI LUITEL</div></b>
-            <br></br>
-            <div>Lorem ipsum dolor amet consectetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt ut labore et dolore
-          teturLorem ipsum dolor amet consectetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad.</div>
-            <div className="card-body">
-              <div className="socialm"><FaFacebook /> </div>
-              <div className="socialm"><FaLinkedin /></div>
-              <div className="socialm"><FaInstagram /></div>
-              <div className="socialm"> <FaYoutube /></div>
-              <div className="socialm"><FaTwitter /></div>
-              <div className="socialm"><FaPinterest /></div>
+        {
+          this.props.comments.map((comment) => {
+            const reactsCount = this.getCommentReactCount(comment);
+            return (
+              <div class="card commentmain " key={comment._id}>
 
-            </div>
-
-          </div>
-        </div>
-        <br></br><br></br>
-        <p className="commentname">LEAVE A COMMENT</p>
-
-        <b><div className="new5"></div></b>
-        <br></br>
-        <div className="container">
-          <div className="">
-
-            <div >
-
-              <div className="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div className="row register-form">
-
-                  <div className="col-md-8 " >
-                    <div class="form-group">
-                      <textarea class="form-control reply" placeholder="COMMENT" rows="3"></textarea>
-                    </div>
-                    <input type="SUBMIT" class="btn-dark submit-reply" value="SUBMIT" />
+                <div className="card-body">
+                  <div  >
+                    <img src={User} className=" rounded-circle card-img imgcard " alt={comment.user.fullName} />
+                  </div>
+                  <b className=" card-text name">{comment.user.fullName}</b>
+                  <br></br>
+                  <div> {comment.comment}
                   </div>
 
                 </div>
-                <br></br>
+                <b> <div><span className="card-text text-muted " className="mr-3 text-secondary" style={{ fontSize: "13px" }}><faCalendar /> {DateFormat(comment.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</span></div></b>
+                <div className=" text-right ">
+                  <div className="card-body thump">
+
+                    {/* <FaThumbsUp /> 11 <FaThumbsDown /> 0 */}
+                    <span className=" text-success" style={{ fontSize: "16px" }}><FontAwesomeIcon icon={faThumbsUp}  /> {reactsCount.like}</span>
+                                                <span className="mr-2 text-danger" style={{ fontSize: "16px" }}><FontAwesomeIcon icon={faThumbsDown} /> {reactsCount.dislike}</span>
+  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <p className="commentname">COMMENTS: 3</p>
-        <b><div className="new5"></div></b>
+            );
+          })
 
+        }
         <br></br>
-        <div class="card commentmain ">
-
-          <div className="card-body">
-            <img className="card-img imgcard" src="avatarjpg.jpg" alt="Card image cap" />
-
-            <b className=" card-text name">AANG SHERPA</b>
-            <b> <div className="card-text text-muted ">JAN 1, 2021</div></b>
-            <br></br>
-            <div>Lorem ipsum dolor amet consectetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt ut labore et dolore
-            tetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt
-    sed.</div>
-
-
-          </div>
-          <div className=" text-right ">
-            <div className="card-body">
-
-              <FaThumbsUp /> 11 <FaThumbsDown /> 0
-  </div>
-          </div>
-
-
-        </div>
-        <br></br>
-        <div className="card commentmain">
-
-          <div className="card-body">
-            <img className="card-img imgcard" src="naruto.jpg" alt="Card image cap" />
-
-            <b className=" card-text name">NARUTO TAMANG</b>
-            <b> <div class="card-text text-muted date">JAN 2, 2021</div></b>
-            <br></br>
-            <div>Lorem ipsum dolor amet consectetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt ut labore et dolore
-            tetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt
-    sed.</div>
-
-
-          </div>
-          <div className=" text-right">
-            <div className="card-body">
-
-              <FaThumbsUp /> 10 <FaThumbsDown /> 0
-  </div>
-          </div>
-
-
-        </div>
-        <br></br>
-        <div className="card commentmain">
-
-          <div className="card-body">
-            <img className="card-img imgcard" src="picca.png" alt="Card image cap" />
-
-            <b className=" card-text name">PIKA GURUNG</b>
-            <b> <div class="card-text text-muted date">JAN 3, 2021</div></b>
-            <br></br>
-            <div>Lorem ipsum dolor amet consectetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt ut labore et dolore
-            tetur adipisic elit eiusmod tempor incididunt labore dolore magna aliqu enimad min incididunt
-    sed.</div>
-
-          </div>
-          <div className=" text-right">
-            <div className="card-body">
-
-              <FaThumbsUp /> 20 <FaThumbsDown /> 0
-  </div>
-          </div>
-
-
-        </div>
-        <br></br>
-
-
-        <br></br>
-        <br></br>
-
       </div>
 
     )

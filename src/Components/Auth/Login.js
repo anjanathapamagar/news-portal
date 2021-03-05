@@ -1,31 +1,35 @@
 import React ,{Component, useState} from 'react'
 import {Form, FormGroup, Label, Input, Button ,Modal} from 'react-bootstrap'
 import {Link, Redirect} from 'react-router-dom'
-import news from '../images/news1.gif';
-import Loading from '../Components/Layout/Loading.js';
+import news from '../../images/news1.gif';
+import Loading from '../Layout/Loading.js';
 import {  FaFontAwesome, FaUserCircle } from 'react-icons/fa';
-import { simplifiedError } from '../Components/utils/simplifiedError.js';
-import Dialog from './Layout/Dialog';
+import { simplifiedError } from '../utils/simplifiedError.js';
+import Dialog from '../Layout/Dialog';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Validator from 'validator'
 import Axios from 'axios';
-import { BaseURL } from '../Components/utils/constant.js';
+import { BaseURL } from '../utils/Constant.js';
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css';
-import { UserContext } from './context/UserContext.js';
+import { UserContext } from '../context/UserContext.js';
 import validator from 'validator';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+toast.configure();
 export default class Login extends Component {
     static contextType = UserContext;
     constructor(props){
         super(props);
        
         this.state ={
-            addModalShow:false,
+            // addModalShow:false,
             phone: "",
             password: "",
             errors: {},
             dialog: null,
-            isRequestComplete: true
+            isRequestComplete: true,
+            isLoginComplete: false
         }
         
     }
@@ -34,11 +38,9 @@ export default class Login extends Component {
         const { errors } = this.state;
         const keysToBeIgnored = ["phone", "password"];
         const errorMessage = simplifiedError(errors, keysToBeIgnored);
-        console.log(errorMessage);
         if (errorMessage.errorString) {
-            const errorDialog = <Dialog type="danger" headerText="LOGIN FAILED" bodyText={errorMessage.errorString} positiveButton={{ text: "OK" }} clearDialog={() => this.setState({ dialog: null })} icon={<FaFontAwesome icon={faExclamationTriangle} />} />;
+            const errorDialog = <Dialog type="danger" headerText="LOGIN FAILED" bodyText={errorMessage.errorString} positiveButton={{ text: "OK" }} clearDialog={() => this.setState({ dialog: null })} icon={<FontAwesomeIcon icon={faExclamationTriangle} />} />;
             this.setState({ dialog: errorDialog, errors: errorMessage.errorObject });
-            // toast.error(errors.errorMessage.errorObject)
         }
     };
 
@@ -73,15 +75,16 @@ export default class Login extends Component {
             this.setState({ isRequestComplete: false });
             Axios({
                 method: "post",
-                url: `http://localhost:5000/users/login`,
+                url: `https://news-portal-api-server.herokuapp.com/users/login`,
                 data
             }).then(result => {
-                this.setState({ isRequestComplete: true });
+                this.setState({ isRequestComplete: true, isLoginComplete: true });
                 const { user, token } = result.data;
                 if (token) {
                     localStorage.setItem("token", token);
                     this.context.setUser(user);
                 }
+                toast.success("Login successfully!!")
             }).catch(error => {
                 let { errors } = this.state;
                 if (error.response && error.response.data.message) {
@@ -103,28 +106,32 @@ export default class Login extends Component {
         let errors = {};
 
         if (!input.phone)
-        errors.phone = "Phone is required";
+        {errors.phone = "Phone is required";}
         else if(!Validator.isNumeric(validator.trim(input.phone))){
-            input.phone = "Phone number must be numeric"
+            errors.phone = "Phone number must be numeric"
         }else if(validator.trim(input.phone).length !== 10){
-            input.phone = "Phone number must not be less than 10 character"
+            errors.phone = "Phone number must not be less than 10 character"
         }
 
 
         if (!input.password)
-            errors.password = "Password is required";
+            {errors.password = "Password is required";}
+           else if(validator.trim(input.password).length < 6){
+            errors.password = "Password must not be less than 6 character"
+            }
+
 
         this.setState({ errors });
         return Object.keys(errors).length === 0;
     };
 
     render() {
-        const { errors, phone, password, dialog, isRequestComplete } = this.state;
+        const { errors, phone, password, dialog, isRequestComplete, isLoginComplete } = this.state;
         // console.log(errors);
         const { user } = this.context;
 
-        if (user && (user.role === "USER" )) return <Redirect to="/loginsuccess" />;
-        let addModalClose =()=> this.setState({addModalShow:false});
+        if (isLoginComplete==true) return <Redirect to="/" />;
+        // let addModalClose =()=> this.setState({addModalShow:false});
         
         return (
               <>
@@ -137,13 +144,14 @@ export default class Login extends Component {
             }
             <ToastContainer 
             />
-                <FaUserCircle  id="closeicon" size='1.5rem' className="usericon" color="white" onClick={() =>this.setState({addModalShow:true})}></FaUserCircle>
+                {/* <FaUserCircle  id="closeicon" size='1.5rem' className="usericon" color="white" onClick={() =>this.setState({addModalShow:true})}></FaUserCircle> */}
                 <Modal
+                {...this.props}
                  size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                 show={this.state.addModalShow} 
-                onHide={addModalClose}
+                //  show={this.state.addModalShow} 
+                // onHide={addModalClose}
                 >
                      <Modal.Header closeButton className="closeb">
                         {/* <Modal.Title id="contained-modal-title-vcenter">
@@ -171,7 +179,7 @@ export default class Login extends Component {
                             <div class="form-group">
                                     <input type="number" name="phone" value={phone} onChange={this.onChange} onFocus={this.onInputFieldFocus} onBlur={this.onInputFieldBlur} placeholder="YOUR PHONE NUMBER" className={"form-control rounded-0 " + (errors.phone ? "is-invalid" : "")} autoComplete="off"/>
                                     <div className="invalid-feedback">
-                                                <span>{errors.phone}</span>
+                                    <span>{errors.phone}</span>
                                             </div>
                                 </div>
                                 <div class="form-group">

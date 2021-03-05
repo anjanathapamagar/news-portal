@@ -1,6 +1,6 @@
 import React, { Component, createContext } from 'react';
 import Axios from 'axios';
-import { BaseURL } from '../utils/constant.js';
+import { BaseURL } from '../utils/Constant.js';
 import Initializing from '../Layout/Initializing.js';
 
 export const UserContext = createContext();
